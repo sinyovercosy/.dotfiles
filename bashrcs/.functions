@@ -1,0 +1,186 @@
+# Simple calculator
+function calc() {
+    local result=""
+    result="$(printf "scale=10;$*\n" | bc --mathlib | tr -d '\\\n')"
+    #                       └─ default (when `--mathlib` is used) is 20
+    #
+    if [[ "$result" == *.* ]]; then
+        # improve the output for decimal numbers
+        printf "$result" |
+        sed -e 's/^\./0./'        `# add "0" for cases like ".5"` \
+            -e 's/^-\./-0./'      `# add "0" for cases like "-.5"`\
+            -e 's/0*$//;s/\.$//'   # remove trailing zeros
+    else
+        printf "$result"
+    fi
+    printf "\n"
+}
+
+# Move a file to the MacOS trash
+trash () { command mv "$@" ~/.Trash ; }
+
+# Open any file in MacOS Quicklook Preview
+ql () { qlmanage -p "$*" >& /dev/null; }
+
+# Create a new directory and enter it
+function mkd() {
+    mkdir -p "$@" && cd "$@"
+}
+
+# Change working directory to the top-most Finder window location
+function cdf() { # short for `cdfinder`
+    cd "$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')"
+}
+
+#   hostinfo:  display useful host related informaton
+#   -------------------------------------------------------------------
+    hostinfo() {
+        echo -e "\nYou are logged on ${RED}$HOST"
+        echo -e "\nAdditionnal information:$NC " ; uname -a
+        echo -e "\n${RED}Users logged on:$NC " ; w -h
+        echo -e "\n${RED}Current date :$NC " ; date
+        echo -e "\n${RED}Machine stats :$NC " ; uptime
+        echo -e "\n${RED}Current network location :$NC " ; scselect
+        echo -e "\n${RED}Public facing IP Address :$NC " ; myip
+        #echo -e "\n${RED}DNS Configuration:$NC " ; scutil --dns
+        echo
+    }
+
+# Determine size of a file or total size of a directory
+function fs() {
+    if du -b /dev/null > /dev/null 2>&1; then
+        local arg=-sbh
+    else
+        local arg=-sh
+    fi
+    if [[ -n "$@" ]]; then
+        du $arg -- "$@"
+    else
+        du $arg .[^.]* *
+    fi
+}
+
+# Escape UTF-8 characters into their 3-byte format
+function escape() {
+    printf "\\\x%s" $(printf "$@" | xxd -p -c1 -u)
+    # print a newline unless we’re piping the output to another program
+    if [ -t 1 ]; then
+        echo # newline
+    fi
+}
+
+# Decode \x{ABCD}-style Unicode escape sequences
+function unidecode() {
+    perl -e "binmode(STDOUT, ':utf8'); print \"$@\""
+    # print a newline unless we’re piping the output to another program
+    if [ -t 1 ]; then
+        echo # newline
+    fi
+}
+
+# Get a character’s Unicode code point
+function codepoint() {
+    perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))"
+    # print a newline unless we’re piping the output to another program
+    if [ -t 1 ]; then
+        echo # newline
+    fi
+}
+
+#   extract:  Extract most know archives with one command
+#   ---------------------------------------------------------
+    extract () {
+        if [ -f $1 ] ; then
+          case $1 in
+            *.tar.bz2)   tar xjf $1     ;;
+            *.tar.gz)    tar xzf $1     ;;
+            *.bz2)       bunzip2 $1     ;;
+            *.rar)       unrar e $1     ;;
+            *.gz)        gunzip $1      ;;
+            *.tar)       tar xf $1      ;;
+            *.tbz2)      tar xjf $1     ;;
+            *.tgz)       tar xzf $1     ;;
+            *.zip)       unzip $1       ;;
+            *.Z)         uncompress $1  ;;
+            *.7z)        7z x $1        ;;
+            *)     echo "'$1' cannot be extracted via extract()" ;;
+             esac
+         else
+             echo "'$1' is not a valid file"
+         fi
+    }
+
+# Show all the names (CNs and SANs) listed in the SSL certificate
+# for a given domain
+function getcertnames() {
+    if [ -z "${1}" ]; then
+        echo "ERROR: No domain specified."
+        return 1
+    fi
+
+    local domain="${1}"
+    echo "Testing ${domain}…"
+    echo # newline
+
+    local tmp=$(echo -e "GET / HTTP/1.0\nEOT" \
+        | openssl s_client -connect "${domain}:443" 2>&1);
+
+    if [[ "${tmp}" = *"-----BEGIN CERTIFICATE-----"* ]]; then
+        local certText=$(echo "${tmp}" \
+            | openssl x509 -text -certopt "no_header, no_serial, no_version, \
+            no_signame, no_validity, no_issuer, no_pubkey, no_sigdump, no_aux");
+            echo "Common Name:"
+            echo # newline
+            echo "${certText}" | grep "Subject:" | sed -e "s/^.*CN=//";
+            echo # newline
+            echo "Subject Alternative Name(s):"
+            echo # newline
+            echo "${certText}" | grep -A 1 "Subject Alternative Name:" \
+                | sed -e "2s/DNS://g" -e "s/ //g" | tr "," "\n" | tail -n +2
+            return 0
+    else
+        echo "ERROR: Certificate not found.";
+        return 1
+    fi
+}
+
+# Add note to Notes.app (OS X 10.8)
+# Usage: `note 'title' 'body'` or `echo 'body' | note`
+# Title is optional
+function note() {
+    local title
+    local body
+    if [ -t 0 ]; then
+        title="$1"
+        body="$2"
+    else
+        title=$(cat)
+    fi
+    osascript >/dev/null <<EOF
+tell application "Notes"
+    tell account "iCloud"
+        tell folder "Notes"
+            make new note with properties {name:"$title", body:"$title" & "<br><br>" & "$body"}
+        end tell
+    end tell
+end tell
+EOF
+}
+
+# Add reminder to Reminders.app (OS X 10.8)
+# Usage: `remind 'foo'` or `echo 'foo' | remind`
+function remind() {
+    local text
+    if [ -t 0 ]; then
+        text="$1" # argument
+    else
+        text=$(cat) # pipe
+    fi
+    osascript >/dev/null <<EOF
+tell application "Reminders"
+    tell the default list
+        make new reminder with properties {name:"$text"}
+    end tell
+end tell
+EOF
+}
