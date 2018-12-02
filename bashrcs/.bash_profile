@@ -59,6 +59,10 @@ bind "set completion-ignore-case on"
 # Turn off the ability for other people to message your terminal using wall
 mesg n
 
+# virtualenvwrapper
+export WORKON_HOME=$HOME/.virtualenvs
+source /usr/local/bin/virtualenvwrapper_lazy.sh
+
 # Add autocompletion for jump
 # http://jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html?utm_source=hackernewsletter&utm_medium=email
 _completemarks() {
