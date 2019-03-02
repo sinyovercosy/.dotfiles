@@ -184,3 +184,8 @@ tell application "Reminders"
 end tell
 EOF
 }
+
+# CMU course specific reqs
+function runrm(){  
+   python /afs/cs.cmu.edu/academic/class/15251-s19/rmprogramming/rmi.pyc $@  
+}

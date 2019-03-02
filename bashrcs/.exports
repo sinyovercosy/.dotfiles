@@ -33,5 +33,10 @@ export MANPAGER='less -X';
 # https://stackoverflow.com/a/42265848/96656
 export GPG_TTY=$(tty);
 
+# install homebrew casks to ~/Applications instead of /Applications
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
+
+# virtualenvwrapper
+export WORKON_HOME=$HOME/.virtualenvs
+export VIRTUALENVWRAPPER_SCRIPT=/usr/local/bin/virtualenvwrapper.sh
 

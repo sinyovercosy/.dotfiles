@@ -6,7 +6,6 @@ for file in ~/.dotfiles/bashrcs/.{path,bash_prompt,exports,aliases,functions,ext
         [ -r "$file" ] && source "$file"
     done
     unset file
-export PATH="/usr/local/sbin:$HOME/bin:$PATH"
 
 # Check the window size after each command and, if necessary,
 # Update the values of LINES and COLUMNS.
@@ -60,8 +59,7 @@ bind "set completion-ignore-case on"
 mesg n
 
 # virtualenvwrapper
-export WORKON_HOME=$HOME/.virtualenvs
-source /usr/local/bin/virtualenvwrapper_lazy.sh
+[ -f /usr/local/bin/virtualenvwrapper_lazy.sh ] && source /usr/local/bin/virtualenvwrapper_lazy.sh
 
 # Add autocompletion for jump
 # http://jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html?utm_source=hackernewsletter&utm_medium=email
@@ -73,3 +71,8 @@ _completemarks() {
 }
 
 complete -o default -o nospace -F _completemarks jump unmark
+
+# CMU course-specific reqs
+if [ -f ~/.bashrc_gpi ]; then
+    source ~/.bashrc_gpi
+fi
