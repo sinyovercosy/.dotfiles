@@ -1,3 +1,9 @@
+" better indent
+set shiftwidth=2
+set tabstop=2
+set textwidth=80
+set breakindent
+
 " Is this peaksea?
 set background=dark
 colorscheme solarized8
@@ -39,3 +45,6 @@ let g:go_version_warning = 0
 " Working fast editing and reloading of vimrc configs
 map <leader>e :e! ~/.dotfiles/my_configs.vim<cr>
 autocmd! bufwritepost ~/.dotfiles/my_configs.vim :silent !cp ~/.dotfiles/my_configs.vim ~/.vim_runtime/my_configs.vim
+
+" LaTeX
+let g:tex_flavor = "latex"
