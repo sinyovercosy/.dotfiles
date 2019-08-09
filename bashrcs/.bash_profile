@@ -56,10 +56,15 @@ bind "set completion-ignore-case on"
 [ -x /usr/bin/lesspipe.sh ] && export LESSOPEN="|/usr/bin/lesspipe.sh %s"
 
 # Turn off the ability for other people to message your terminal using wall
-mesg n
+[ -f /usr/bin/mesg ] && mesg n
+
 
 # virtualenvwrapper
-[ -f /usr/local/bin/virtualenvwrapper_lazy.sh ] && source /usr/local/bin/virtualenvwrapper_lazy.sh
+if [ -f /usr/local/bin/virtualenvwrapper_lazy.sh ]; then
+  source /usr/local/bin/virtualenvwrapper_lazy.sh
+elif [ -f ~/.local/bin/virtualenvwrapper_lazy.sh ]; then
+  source ~/.local/bin/virtualenvwrapper_lazy.sh
+fi
 
 # Add autocompletion for jump
 # http://jeroenjanssens.com/2013/08/16/quickly-navigate-your-filesystem-from-the-command-line.html?utm_source=hackernewsletter&utm_medium=email

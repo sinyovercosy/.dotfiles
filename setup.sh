@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# setup bash
+# setup bashrc
 echo "if tty -s
 then
     if [ -f ~/.dotfiles/bashrcs/.bash_profile ]; then
@@ -9,12 +9,12 @@ then
 fi" > ~/.bashrc
 echo "if [ -f "$HOME/.bashrc" ]; then . "$HOME/.bashrc"; fi " > ~/.bash_profile
 
-# setup vim
+# setup vimrc
 git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime
 sh ~/.vim_runtime/install_awesome_vimrc.sh
 ln -r -s -f ./my_configs.vim ~/.vim_runtime
 
-# setup tmux
+# setup tmux.conf
 git clone https://github.com/gpakosz/.tmux.git ~/.tmux
 ln -s -f ~/.tmux/.tmux.conf ~
 cp ~/.tmux/.tmux.conf.local ~
@@ -26,3 +26,8 @@ do
   git clone https://github.com/${a}/${b}.git ~/.vim_runtime/my_plugins/${b}
 done < plugins.list
 
+# install virtualenvwrapper
+if command -v python3 &>/dev/null; then
+  easy_install --user pip && pip install --user virtualenvwrapper
+  mkdir ~/.virturalenvs
+fi
