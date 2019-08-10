@@ -31,7 +31,7 @@ gc                        # toggle comment for selection
 <leader> f                # open recently opened files
 <leader> o                # view, switch, kill buffers (tabs)
 <leader> h                # switch to prev. buffer
-<leader> l                # switch to prev. buffer
+<leader> l                # switch to next buffer
 <leader> bd               # kill current buffer
 <leader> ba               # kill all (up to 1000) buffers
 <leader> z                # focus mode (hide tabs and status)
