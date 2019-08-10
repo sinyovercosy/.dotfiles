@@ -46,7 +46,7 @@ C-h C-j C-k C-l           # navigate splits incl. tmux panes
 
 ### tmux
 The `<prefix>` is `C-a` (<kbd>Ctrl</kbd> + <kbd>a</kbd>) *inside tmux*.
-The default `<prefix>` <kbd>Ctrl</kbd> + <kbd>a</kbd> can also be used.
+The default `<prefix>` <kbd>Ctrl</kbd> + <kbd>b</kbd> can also be used.
 ```
 tmux                       # new session
 <prefix> C-c               # new session
