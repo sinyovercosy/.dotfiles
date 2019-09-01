@@ -1,6 +1,7 @@
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="/usr/local/smlnj/bin:$PATH"
 
 # CMU course-specific reqs
 # export PATH="/afs/andrew/course/15/150/bin:$PATH"
