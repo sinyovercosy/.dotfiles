@@ -76,8 +76,3 @@ _completemarks() {
 }
 
 complete -o default -o nospace -F _completemarks jump unmark
-
-# CMU course-specific reqs
-if [ -f ~/.bashrc_gpi ]; then
-    source ~/.bashrc_gpi
-fi
