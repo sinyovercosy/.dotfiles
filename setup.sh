@@ -28,6 +28,6 @@ done < plugins.list
 
 # install virtualenvwrapper
 if command -v python3 &>/dev/null; then
-  easy_install --user pip && pip install --user virtualenvwrapper
+  pip3 install --user virtualenvwrapper
   mkdir ~/.virturalenvs
 fi
