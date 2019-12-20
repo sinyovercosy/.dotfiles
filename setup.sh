@@ -3,8 +3,8 @@
 # setup bashrc
 echo "if tty -s
 then
-    if [ -f ~/.dotfiles/bashrcs/.bash_profile ]; then
-        source ~/.dotfiles/bashrcs/.bash_profile
+    if [ -f ~/.dotfiles/bashrcs/profile ]; then
+        source ~/.dotfiles/bashrcs/profile
     fi
 fi" > ~/.bashrc
 echo "if [ -f "$HOME/.bashrc" ]; then . "$HOME/.bashrc"; fi " > ~/.bash_profile
