@@ -121,3 +121,6 @@ command -v sha1sum > /dev/null || alias sha1sum="shasum"
 
 # smlnj
 alias smlnj='rlwrap sml'
+
+# vscode
+alias vscode='code-insiders'
