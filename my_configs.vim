@@ -43,6 +43,18 @@ set clipboard=unnamed
 
 " AFS needs to update vim
 let g:go_version_warning = 0
+"
+" Working fast editing and reloading of vimrc configs
+map <leader>e :e! ~/.dotfiles/my_configs.vim<cr>
+autocmd! bufwritepost ~/.dotfiles/my_configs.vim :silent !cp ~/.dotfiles/my_configs.vim ~/.vim_runtime/my_configs.vim
 
 " LaTeX
 let g:tex_flavor = "latex"
+
+" OCaml Merlin
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
+
+" omnicompletion 
+set omnifunc=syntaxcomplete#Complete
+set completeopt=longest,menuone
