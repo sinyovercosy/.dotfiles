@@ -78,4 +78,4 @@ _completemarks() {
 complete -o default -o nospace -F _completemarks jump unmark
 
 # opam configuration
-test -r /Users/TY/.opam/opam-init/init.sh && . /Users/TY/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
+test -r ~/.opam/opam-init/init.sh && . ~/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true
