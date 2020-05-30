@@ -31,6 +31,7 @@ done < "$DIR/plugins.list"
 
 # install virtualenvwrapper
 if command -v python3 &>/dev/null; then
-  pip3 install --user virtualenvwrapper
+  sudo pip3 install --upgrade pip &&
+  sudo pip3 install virtualenvwrapper &&
   mkdir ~/.virturalenvs
 fi
