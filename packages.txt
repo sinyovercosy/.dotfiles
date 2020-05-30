@@ -1,0 +1,14 @@
+bash
+bash-completion
+coreutils
+findutils
+gcc
+gdb
+git
+htop
+python
+rlwrap
+tmux
+tree
+vim
+wget

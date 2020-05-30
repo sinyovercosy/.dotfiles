@@ -1,0 +1,8 @@
+alfred
+flux
+google-chrome
+iterm2-beta
+keepingyouawake
+slack-beta
+spotify
+visual-studio-code-insiders
