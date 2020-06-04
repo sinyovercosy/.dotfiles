@@ -55,5 +55,5 @@ cat "$DIR/vim-tmux-navigator.tmux.conf" >> ~/.tmux.conf.local
 if command -v python3 &>/dev/null; then
   sudo pip3 install --upgrade pip &&
   sudo pip3 install virtualenvwrapper &&
-  mkdir ~/.virturalenvs
+  mkdir ~/.virtualenvs
 fi
