@@ -12,3 +12,5 @@ tmux
 tree
 vim
 wget
+tldr
+fd
