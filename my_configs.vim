@@ -39,7 +39,7 @@ vmap ∆ <M-j>
 vmap ˚ <M-k>
 
 " Copy Pasta
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 " AFS needs to update vim
 let g:go_version_warning = 0
